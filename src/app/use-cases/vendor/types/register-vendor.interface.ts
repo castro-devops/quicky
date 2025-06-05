@@ -1,4 +1,4 @@
-export interface IVendorInterfaceProps {
+export interface IRegisterVendorUseCaseRequest {
   name: string;
   surname: string;
   birth: Date;
