@@ -1,12 +1,9 @@
-export class BuildVendorError extends Error {
-  private readonly _code: string;
+import { AppError } from '@/core/errors/app-error';
 
-  get code(): string {
-    return this._code;
-  }
+export class VendorAlreadyExistsError extends AppError {
+  readonly code = 'vendor-service.already-exists';
 
   constructor() {
-    super('Tivemos um problema na estruturação dos dados');
-    this._code = 'vendor.build-vendor';
+    super('Já existe uma conta com este email.');
   }
 }

@@ -7,9 +7,29 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
     return this._props.name;
   }
 
-  static create(props: IVendorInterfaceProps, id?: UniqueID) {
-    const vendor = new Vendor({ ...props }, id);
+  get surname(): string {
+    return this._props.surname;
+  }
 
-    return { vendor };
+  get birth(): Date {
+    return this._props.birth;
+  }
+
+  get email(): string {
+    return this._props.email;
+  }
+
+  get phone(): string {
+    return this._props.phone;
+  }
+
+  static create(props: IVendorInterfaceProps): Vendor {
+    const vendor = new Vendor({ ...props }, new UniqueID());
+    return vendor;
+  }
+
+  static restore(props: IVendorInterfaceProps, id: UniqueID): Vendor {
+    const vendor = new Vendor({ ...props }, id);
+    return vendor;
   }
 }
