@@ -9,15 +9,15 @@ datasource db {
 }
 
 model Vendor {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   surname   String
   birth     DateTime
-  email     String   @unique
+  email     String    @unique
   phone     String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @map("updated_at")
-  deletedAt DateTime @map("deleted_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
 
   @@map("vendors")
 }
