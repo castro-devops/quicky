@@ -4,6 +4,7 @@ import { RegisterVendorUseCase } from './register-vendor.use-case';
 import { CanRegisterVendorPolicy } from './policies/can-register-vendor.policy';
 import { Vendor } from '@/domain/vendor/entities/vendor.entity';
 import { VendorAlreadyExistsError } from '../errors';
+import dayjs from '@/core/config/dayjs.config';
 
 describe('RegisterVendorUseCase', () => {
   let repository: InMemoryVendorRepository;
@@ -22,6 +23,11 @@ describe('RegisterVendorUseCase', () => {
       birth: new Date('1999-01-01'),
       email: 'jondoe@example.com',
       phone: '5588988888888',
+      document: '12345678910',
+      status: 'pending',
+      plan: 'free',
+      planExpiresAt: dayjs().add(30, 'days').toDate(),
+      createdAt: dayjs().toDate(),
     });
 
     expect(result.right()).toBe(true);
@@ -39,6 +45,11 @@ describe('RegisterVendorUseCase', () => {
       birth: new Date('1990-01-01'),
       email: 'john@doe.com',
       phone: '5588988888888',
+      document: '12345678910',
+      plan: 'free',
+      status: 'pending',
+      planExpiresAt: dayjs('2025-01-05').toDate(),
+      createdAt: dayjs('2025-01-01').toDate(),
     });
 
     await repository.save(vendor);
@@ -49,6 +60,11 @@ describe('RegisterVendorUseCase', () => {
       birth: new Date('1992-02-02'),
       email: 'john@doe.com',
       phone: '5588988888888',
+      document: '98765432100',
+      status: 'pending',
+      plan: 'free',
+      planExpiresAt: dayjs().add(30, 'days').toDate(),
+      createdAt: dayjs().toDate(),
     });
 
     expect(result.left()).toBe(true);

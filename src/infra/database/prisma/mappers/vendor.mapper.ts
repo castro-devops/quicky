@@ -1,20 +1,18 @@
-// vendor-mapper.ts
-import { Vendor } from '@/domain/vendor/entities/vendor.entity';
+import { safeAssign } from '@/core/utils/safe-assing.util';
 import { UniqueID } from '@/core/value-objects/unique-id.vo';
-import { Prisma } from '@prisma/client';
+import { Vendor } from '@/domain/vendor/entities/vendor.entity';
+import { Prisma, Vendor as PrismaVendor } from '@prisma/client';
 
 export class VendorMapper {
-  static toDomain(
-    raw: Prisma.VendorUncheckedCreateInput & { id: string },
-  ): Vendor {
+  static toDomain(raw: PrismaVendor): Vendor {
     return Vendor.restore(
       {
         name: raw.name,
         surname: raw.surname,
-        birth: raw.birth,
+        birth: raw.birth ?? null,
         email: raw.email,
         phone: raw.phone,
-        companyName: raw.companyName ?? undefined,
+        companyName: safeAssign(raw.companyName),
         document: raw.document,
         status: raw.status,
         plan: raw.plan,
@@ -33,12 +31,11 @@ export class VendorMapper {
       birth: vendor.birth ?? undefined,
       email: vendor.email,
       phone: vendor.phone,
-      companyName: vendor.companyName ?? undefined,
+      companyName: vendor.companyName,
       document: vendor.document,
       status: vendor.status,
       plan: vendor.plan,
       planExpiresAt: vendor.planExpiresAt ?? undefined,
-      createdAt: vendor.createdAt,
       updatedAt: vendor.updatedAt ?? undefined,
     };
   }

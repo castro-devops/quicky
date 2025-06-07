@@ -7,7 +7,7 @@ export interface IVendorInterfaceProps {
   companyName?: string;
   document: string;
   status: 'active' | 'suspended' | 'pending';
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
   plan: 'free' | 'pro' | 'enterprise';
   planExpiresAt?: Date;

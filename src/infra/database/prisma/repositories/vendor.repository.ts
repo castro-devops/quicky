@@ -2,29 +2,21 @@ import { VendorRepository } from '@/app/repositories/vendor.repository';
 import { Vendor } from '@/domain/vendor/entities/vendor.entity';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { UniqueID } from '@/core/value-objects/unique-id.vo';
+import { VendorMapper } from '../mappers/vendor.mapper';
 
 @Injectable()
 export class PrismaVendorRepository implements VendorRepository {
   constructor(private readonly db: PrismaService) {}
 
   async save(vendor: Vendor) {
-    const { id, name, surname, birth, email, phone } =
-      await this.db.vendor.create({
-        data: {
-          id: vendor.id.toValue(),
-          name: vendor.name,
-          surname: vendor.surname,
-          birth: vendor.birth,
-          email: vendor.email,
-          phone: vendor.phone,
-        },
-      });
+    const created = await this.db.vendor.create({
+      data: {
+        id: vendor.id.toValue(),
+        ...VendorMapper.toPrisma(vendor),
+      },
+    });
 
-    return Vendor.restore(
-      { name, surname, birth, email, phone },
-      new UniqueID(id),
-    );
+    return VendorMapper.toDomain(created);
   }
 
   async findByEmail(email: string) {
@@ -38,11 +30,6 @@ export class PrismaVendorRepository implements VendorRepository {
       return null;
     }
 
-    const { id, name, surname, birth, phone } = vendor;
-
-    return Vendor.restore(
-      { name, surname, birth, email, phone },
-      new UniqueID(id),
-    );
+    return VendorMapper.toDomain(vendor);
   }
 }
