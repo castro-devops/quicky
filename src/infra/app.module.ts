@@ -5,9 +5,16 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigsModule } from '@/core/config/configs.module';
 import { ApplicationModule } from '@/app/application.module';
 import { CoreModule } from '@/core/core.module';
+import { VendorsModule } from './http/vendors/vendors.module';
 
 @Module({
-  imports: [DatabaseModule, ConfigsModule, ApplicationModule, CoreModule],
+  imports: [
+    DatabaseModule,
+    ConfigsModule,
+    ApplicationModule,
+    CoreModule,
+    VendorsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
