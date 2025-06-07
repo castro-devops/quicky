@@ -1,4 +1,4 @@
-import { AppError } from '@/core/errors/app-error';
+import { AppError } from '@/core/errors/app.error';
 
 export class VendorAlreadyExistsError extends AppError {
   readonly code = 'vendor-service.already-exists';

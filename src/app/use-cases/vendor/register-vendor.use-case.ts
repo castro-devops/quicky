@@ -25,6 +25,13 @@ export class RegisterVendorUseCase {
     birth,
     email,
     phone,
+    companyName,
+    document,
+    status,
+    plan,
+    planExpiresAt,
+    createdAt,
+    updatedAt,
   }: IRegisterVendorUseCaseRequest): Promise<IRegisterVendorUseCaseResponse> {
     const canRegister = await this.canRegisterPolicy.execute(email);
 
@@ -33,7 +40,20 @@ export class RegisterVendorUseCase {
     }
 
     try {
-      const vendor = Vendor.create({ name, surname, email, phone, birth });
+      const vendor = Vendor.create({
+        name,
+        surname,
+        email,
+        phone,
+        birth,
+        companyName,
+        document,
+        status,
+        plan,
+        planExpiresAt,
+        createdAt,
+        updatedAt,
+      });
 
       const saved = await this.vendorRepository.save(vendor);
 

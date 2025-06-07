@@ -11,7 +11,7 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
     return this._props.surname;
   }
 
-  get birth(): Date {
+  get birth(): Date | null | undefined {
     return this._props.birth;
   }
 
@@ -21,6 +21,14 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
 
   get phone(): string {
     return this._props.phone;
+  }
+
+  get status(): string {
+    return this._props.status;
+  }
+
+  get plan(): string {
+    return this._props.plan;
   }
 
   static create(props: IVendorInterfaceProps): Vendor {
