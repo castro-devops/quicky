@@ -1,10 +1,11 @@
 import { InMemoryVendorRepository } from 'test/repositories/memory/in-memory-vendor.repository';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { RegisterVendorUseCase } from './register-vendor.use-case';
 import { CanRegisterVendorPolicy } from './policies/can-register-vendor.policy';
 import { Vendor } from '@/domain/vendor/entities/vendor.entity';
-import { VendorAlreadyExistsError } from '../errors';
+import { RegisterVendorError, VendorAlreadyExistsError } from '../errors';
 import dayjs from '@/core/config/dayjs.config';
+import { BuildVendorError } from '@/domain/vendor/errors';
 
 describe('RegisterVendorUseCase', () => {
   let repository: InMemoryVendorRepository;
@@ -70,6 +71,65 @@ describe('RegisterVendorUseCase', () => {
     expect(result.left()).toBe(true);
     if (result.left()) {
       expect(result.value).toBeInstanceOf(VendorAlreadyExistsError);
+    }
+  });
+
+  it('should return RegisterVendorError when repository returns null', async () => {
+    class NullSaveVendorRepository extends InMemoryVendorRepository {
+      override save(): Promise<Vendor | null> {
+        return Promise.resolve(null);
+      }
+    }
+
+    repository = new NullSaveVendorRepository();
+    const policy = new CanRegisterVendorPolicy(repository);
+    useCase = new RegisterVendorUseCase(repository, policy);
+
+    const result = await useCase.execute({
+      name: 'Jon',
+      surname: 'Doe',
+      birth: new Date('1999-01-01'),
+      email: 'jondoe@example.com',
+      phone: '5588988888888',
+      document: '12345678910',
+      status: 'pending',
+      plan: 'free',
+      planExpiresAt: dayjs().add(30, 'days').toDate(),
+      createdAt: dayjs().toDate(),
+    });
+
+    expect(result.left()).toBe(true);
+    if (result.left()) {
+      expect(result.value).toBeInstanceOf(RegisterVendorError);
+    }
+  });
+
+  it('should propagate BuildVendorError when Vendor.create throws', async () => {
+    const policy = new CanRegisterVendorPolicy(repository);
+    useCase = new RegisterVendorUseCase(repository, policy);
+
+    const buildError = new BuildVendorError({ message: 'invalid' });
+    vi.spyOn(Vendor, 'create').mockImplementationOnce(() => {
+      throw buildError;
+    });
+
+    const result = await useCase.execute({
+      name: 'Jon',
+      surname: 'Doe',
+      birth: new Date('1999-01-01'),
+      email: 'jondoe@example.com',
+      phone: '5588988888888',
+      document: '12345678910',
+      status: 'pending',
+      plan: 'free',
+      planExpiresAt: dayjs().add(30, 'days').toDate(),
+      createdAt: dayjs().toDate(),
+    });
+    vi.restoreAllMocks();
+
+    expect(result.left()).toBe(true);
+    if (result.left()) {
+      expect(result.value).toBe(buildError);
     }
   });
 });

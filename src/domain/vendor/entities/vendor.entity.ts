@@ -50,6 +50,10 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
     return this._props.updatedAt;
   }
 
+  get createdAt(): Date | undefined {
+    return this._props.createdAt;
+  }
+
   static create(props: IVendorInterfaceProps): Vendor {
     requiredFields<IVendorInterfaceProps>(
       {
@@ -61,7 +65,6 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
         document:
           'Um documento de identificação é obrigatório para o registro.',
         status: 'Não conseguimos estabelecer o status inicial da sua conta.',
-        createdAt: 'Não conseguimos definir a data de criação da sua conta.',
         plan: 'É necessário escolher um plano. Que tal iniciar com nosso plano gratuito?',
         planExpiresAt:
           'Não conseguimos estabelecer a data de expiração do seu plano. Tente novamente.',
