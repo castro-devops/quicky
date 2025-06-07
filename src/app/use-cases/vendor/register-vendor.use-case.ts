@@ -2,13 +2,13 @@ import { Vendor } from '@/domain/vendor/entities/vendor.entity';
 import { IRegisterVendorUseCaseRequest } from './types/register-vendor.interface';
 import { VendorRepository } from '@/app/repositories/vendor.repository';
 import { Either, left, right } from '@/core/errors/either';
-import { VendorAlreadyExistsError } from '../errors';
+import { RegisterVendorError, VendorAlreadyExistsError } from '../errors';
 import { CanRegisterVendorPolicy } from './policies/can-register-vendor.policy';
 import { BuildVendorError } from '@/domain/vendor/errors';
 import { Injectable } from '@nestjs/common';
 
 type IRegisterVendorUseCaseResponse = Either<
-  VendorAlreadyExistsError | BuildVendorError,
+  VendorAlreadyExistsError | BuildVendorError | RegisterVendorError,
   { vendor: Vendor }
 >;
 
@@ -35,9 +35,13 @@ export class RegisterVendorUseCase {
     try {
       const vendor = Vendor.create({ name, surname, email, phone, birth });
 
-      await this.vendorRepository.save(vendor);
+      const saved = await this.vendorRepository.save(vendor);
 
-      return right({ vendor });
+      if (!saved) {
+        return left(new RegisterVendorError());
+      }
+
+      return right({ vendor: saved });
     } catch (err) {
       if (err instanceof BuildVendorError) {
         return left(err);

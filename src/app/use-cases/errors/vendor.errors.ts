@@ -7,3 +7,11 @@ export class VendorAlreadyExistsError extends AppError {
     super('Já existe uma conta com este email.');
   }
 }
+
+export class RegisterVendorError extends AppError {
+  readonly code = 'vendor-service.register-error';
+
+  constructor() {
+    super('Tivemos um erro ao tentar criar esta conta.');
+  }
+}

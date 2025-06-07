@@ -12,6 +12,7 @@ export class PrismaVendorRepository implements VendorRepository {
     const { id, name, surname, birth, email, phone } =
       await this.db.vendor.create({
         data: {
+          id: vendor.id.toValue(),
           name: vendor.name,
           surname: vendor.surname,
           birth: vendor.birth,
