@@ -13,7 +13,7 @@ export class VendorMapper {
         email: raw.email,
         phone: raw.phone,
         companyName: safeAssign(raw.companyName),
-        document: raw.document,
+        document: safeAssign(raw.document),
         status: raw.status,
         plan: raw.plan,
         planExpiresAt: raw.planExpiresAt ?? undefined,

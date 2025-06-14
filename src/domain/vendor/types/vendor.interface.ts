@@ -5,7 +5,7 @@ export interface IVendorInterfaceProps {
   email: string;
   phone: string;
   companyName?: string;
-  document: string;
+  document?: string;
   status: 'active' | 'suspended' | 'pending';
   createdAt?: Date;
   updatedAt?: Date;

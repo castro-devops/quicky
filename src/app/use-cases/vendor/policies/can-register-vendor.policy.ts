@@ -1,5 +1,7 @@
 import { VendorRepository } from '@/app/repositories/vendor.repository';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CanRegisterVendorPolicy {
   constructor(private readonly vendorRepository: VendorRepository) {}
 

@@ -30,7 +30,7 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
     return this._props.companyName;
   }
 
-  get document(): string {
+  get document(): string | undefined {
     return this._props.document;
   }
 
@@ -76,7 +76,10 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
     );
 
     const vendor = new Vendor(
-      { ...props, createdAt: props.createdAt ?? dayjs().toDate() },
+      {
+        ...props,
+        createdAt: props.createdAt ?? dayjs().toDate(),
+      },
       new UniqueID(),
     );
     return vendor;

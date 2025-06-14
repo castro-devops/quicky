@@ -16,7 +16,7 @@ model Vendor {
   email         String       @unique
   phone         String
   companyName   String?
-  document      String
+  document      String?
   status        VendorStatus @default(pending)
   plan          VendorPlan   @default(free)
   planExpiresAt DateTime?

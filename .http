@@ -1,0 +1,9 @@
+POST http://localhost:3333/vendor/register
+Content-Type: application/json
+
+{
+  "name": "Breno",
+  "surname": "Castro Barro da Silva",
+  "phone": "88999316842",
+  "email": "breno.castro.ofc@gmail.com"
+}

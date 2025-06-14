@@ -20,6 +20,8 @@ export class PrismaVendorRepository implements VendorRepository {
   }
 
   async findByEmail(email: string) {
+    console.log('REPOSITÓRIO');
+
     const vendor = await this.db.vendor.findUnique({
       where: {
         email,

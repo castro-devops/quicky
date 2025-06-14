@@ -7,8 +7,6 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RegisterVendorDto } from '../schemas/register-vendor.dto';
 import dayjs from '@/core/config/dayjs.config';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
@@ -16,7 +14,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 const bodySchemaRequest = z.object({
   name: z.string(),
   surname: z.string(),
-  birth: z.date().optional(),
+  birth: z.date().default(dayjs().toDate()),
   email: z.string().email(),
   phone: z.string().max(11),
   companyName: z.string().optional(),
@@ -28,18 +26,40 @@ const bodySchemaRequest = z.object({
 type TBodySchemaRequest = z.infer<typeof bodySchemaRequest>;
 
 @Controller({
-  path: 'api/v1/vendor',
+  path: 'vendor',
 })
-@ApiTags('Vendor')
 export class RegisterVendorController {
   constructor(private useCase: RegisterVendorUseCase) {}
 
   @Post('register')
-  @ApiOperation({ summary: 'Cria uma nova conta' })
-  @ApiBody({ type: RegisterVendorDto })
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ZodValidationPipe(bodySchemaRequest))
-  register(@Body() body: TBodySchemaRequest) {
-    console.log(body);
+  async register(
+    @Body()
+    {
+      name,
+      surname,
+      email,
+      phone,
+      plan,
+      birth,
+      document,
+      companyName,
+      planExpiresAt,
+    }: TBodySchemaRequest,
+  ) {
+    const result = await this.useCase.execute({
+      name,
+      surname,
+      email,
+      phone,
+      plan,
+      birth,
+      document,
+      companyName,
+      planExpiresAt,
+    });
+
+    console.log(result);
   }
 }
