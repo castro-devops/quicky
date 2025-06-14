@@ -10,6 +10,8 @@ import {
 import dayjs from '@/core/config/dayjs.config';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
+import { ErroMapper } from '@/infra/http/errors/mapper.error';
+import { VendorPresenter } from '../presenters/vendor.presenter';
 
 const bodySchemaRequest = z.object({
   name: z.string(),
@@ -61,9 +63,9 @@ export class RegisterVendorController {
     });
 
     if (result.left()) {
-      console.log(result.value);
+      throw ErroMapper.toHttp(result.value);
     }
 
-    console.log(result);
+    return VendorPresenter.toHTTP(result.value.vendor);
   }
 }
