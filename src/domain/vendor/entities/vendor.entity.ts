@@ -62,8 +62,6 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
         email:
           'O e-mail é obrigatório para que possamos entrar em contato com você.',
         phone: 'Um número de telefone é necessário para contato.',
-        document:
-          'Um documento de identificação é obrigatório para o registro.',
         status: 'Não conseguimos estabelecer o status inicial da sua conta.',
         plan: 'É necessário escolher um plano. Que tal iniciar com nosso plano gratuito?',
         planExpiresAt:

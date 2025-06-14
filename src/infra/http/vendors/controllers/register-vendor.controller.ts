@@ -60,6 +60,10 @@ export class RegisterVendorController {
       planExpiresAt,
     });
 
+    if (result.left()) {
+      console.log(result.value);
+    }
+
     console.log(result);
   }
 }
