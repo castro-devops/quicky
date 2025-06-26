@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { VendorMapper } from '@/infra/database/prisma/mappers/vendor.mapper';
 import { Vendor } from '@/domain/vendor/entities/vendor.entity';
 import { UniqueID } from '@/core/value-objects/unique-id.vo';
-import dayjs from '@/core/config/dayjs.config';
+import dayjs from '@/core/configs/dayjs.config';
 
 vi.mock('@prisma/client', () => ({ Prisma: {} }));
 

@@ -6,7 +6,5 @@ export interface IRegisterVendorUseCaseRequest {
   phone: string;
   companyName?: string;
   document?: string;
-  plan: 'free' | 'pro' | 'enterprise';
-  planExpiresAt?: Date;
   updatedAt?: Date;
 }

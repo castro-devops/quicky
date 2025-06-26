@@ -3,7 +3,7 @@ import { IVendorInterfaceProps } from '../types/vendor.interface';
 import { UniqueID } from '@/core/value-objects/unique-id.vo';
 import { BuildVendorError } from '../errors';
 import { requiredFields } from '@/core/utils/required-field.util';
-import dayjs from '@/core/config/dayjs.config';
+import dayjs from '@/core/configs/dayjs.config';
 
 export class Vendor extends Entity<IVendorInterfaceProps> {
   get name(): string {
@@ -26,24 +26,12 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
     return this._props.phone;
   }
 
-  get companyName(): string | undefined {
-    return this._props.companyName;
-  }
-
   get document(): string | undefined {
     return this._props.document;
   }
 
   get status(): 'active' | 'suspended' | 'pending' {
     return this._props.status;
-  }
-
-  get plan(): 'free' | 'pro' | 'enterprise' {
-    return this._props.plan;
-  }
-
-  get planExpiresAt(): Date | undefined {
-    return this._props.planExpiresAt;
   }
 
   get updatedAt(): Date | undefined {
@@ -63,9 +51,6 @@ export class Vendor extends Entity<IVendorInterfaceProps> {
           'O e-mail é obrigatório para que possamos entrar em contato com você.',
         phone: 'Um número de telefone é necessário para contato.',
         status: 'Não conseguimos estabelecer o status inicial da sua conta.',
-        plan: 'É necessário escolher um plano. Que tal iniciar com nosso plano gratuito?',
-        planExpiresAt:
-          'Não conseguimos estabelecer a data de expiração do seu plano. Tente novamente.',
       },
       props,
       {

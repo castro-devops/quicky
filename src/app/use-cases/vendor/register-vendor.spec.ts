@@ -4,7 +4,6 @@ import { RegisterVendorUseCase } from './register-vendor.use-case';
 import { CanRegisterVendorPolicy } from './policies/can-register-vendor.policy';
 import { Vendor } from '@/domain/vendor/entities/vendor.entity';
 import { RegisterVendorError, VendorAlreadyExistsError } from '../errors';
-import dayjs from '@/core/config/dayjs.config';
 import { BuildVendorError } from '@/domain/vendor/errors';
 
 describe('RegisterVendorUseCase', () => {
@@ -25,10 +24,6 @@ describe('RegisterVendorUseCase', () => {
       email: 'jondoe@example.com',
       phone: '5588988888888',
       document: '12345678910',
-      status: 'pending',
-      plan: 'free',
-      planExpiresAt: dayjs().add(30, 'days').toDate(),
-      createdAt: dayjs().toDate(),
     });
 
     expect(result.right()).toBe(true);
@@ -47,10 +42,7 @@ describe('RegisterVendorUseCase', () => {
       email: 'john@doe.com',
       phone: '5588988888888',
       document: '12345678910',
-      plan: 'free',
       status: 'pending',
-      planExpiresAt: dayjs('2025-01-05').toDate(),
-      createdAt: dayjs('2025-01-01').toDate(),
     });
 
     await repository.save(vendor);
@@ -62,10 +54,6 @@ describe('RegisterVendorUseCase', () => {
       email: 'john@doe.com',
       phone: '5588988888888',
       document: '98765432100',
-      status: 'pending',
-      plan: 'free',
-      planExpiresAt: dayjs().add(30, 'days').toDate(),
-      createdAt: dayjs().toDate(),
     });
 
     expect(result.left()).toBe(true);
@@ -92,10 +80,6 @@ describe('RegisterVendorUseCase', () => {
       email: 'jondoe@example.com',
       phone: '5588988888888',
       document: '12345678910',
-      status: 'pending',
-      plan: 'free',
-      planExpiresAt: dayjs().add(30, 'days').toDate(),
-      createdAt: dayjs().toDate(),
     });
 
     expect(result.left()).toBe(true);
@@ -120,10 +104,6 @@ describe('RegisterVendorUseCase', () => {
       email: 'jondoe@example.com',
       phone: '5588988888888',
       document: '12345678910',
-      status: 'pending',
-      plan: 'free',
-      planExpiresAt: dayjs().add(30, 'days').toDate(),
-      createdAt: dayjs().toDate(),
     });
     vi.restoreAllMocks();
 

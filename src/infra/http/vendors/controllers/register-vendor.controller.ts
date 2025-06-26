@@ -7,7 +7,7 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
-import dayjs from '@/core/config/dayjs.config';
+import dayjs from '@/core/configs/dayjs.config';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { ErroMapper } from '@/infra/http/errors/mapper.error';
@@ -19,10 +19,7 @@ const bodySchemaRequest = z.object({
   birth: z.date().default(dayjs().toDate()),
   email: z.string().email(),
   phone: z.string().max(11),
-  companyName: z.string().optional(),
   document: z.string().optional(),
-  plan: z.enum(['free', 'pro', 'enterprise']).default('free'),
-  planExpiresAt: z.date().default(dayjs().add(7, 'day').toDate()),
 });
 
 type TBodySchemaRequest = z.infer<typeof bodySchemaRequest>;
@@ -38,28 +35,15 @@ export class RegisterVendorController {
   @UsePipes(new ZodValidationPipe(bodySchemaRequest))
   async register(
     @Body()
-    {
-      name,
-      surname,
-      email,
-      phone,
-      plan,
-      birth,
-      document,
-      companyName,
-      planExpiresAt,
-    }: TBodySchemaRequest,
+    { name, surname, email, phone, birth, document }: TBodySchemaRequest,
   ) {
     const result = await this.useCase.execute({
       name,
       surname,
       email,
       phone,
-      plan,
       birth,
       document,
-      companyName,
-      planExpiresAt,
     });
 
     if (result.left()) {

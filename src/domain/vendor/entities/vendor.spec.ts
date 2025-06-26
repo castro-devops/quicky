@@ -13,8 +13,6 @@ describe('Vendor Entity', () => {
       phone: '5588988888888',
       document: '12345678910',
       status: 'pending',
-      plan: 'free',
-      planExpiresAt: new Date(),
     });
 
     const createdAt = vendor.createdAt;
@@ -32,8 +30,6 @@ describe('Vendor Entity', () => {
         phone: '5588988888888',
         document: '12345678910',
         status: 'pending',
-        plan: 'free',
-        planExpiresAt: new Date(),
         createdAt: new Date(),
       }),
     ).toThrow(BuildVendorError);
@@ -51,8 +47,6 @@ describe('Vendor Entity', () => {
         phone: '5588988888888',
         document: '12345678910',
         status: 'pending',
-        plan: 'free',
-        planExpiresAt: new Date('2025-01-01'),
         createdAt: new Date('2024-01-01'),
       },
       id,

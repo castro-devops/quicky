@@ -2,7 +2,7 @@ import { InMemoryVendorRepository } from 'test/repositories/memory/in-memory-ven
 import { beforeEach, describe, expect, it } from 'vitest';
 import { CanRegisterVendorPolicy } from './can-register-vendor.policy';
 import { Vendor } from '@/domain/vendor/entities/vendor.entity';
-import dayjs from '@/core/config/dayjs.config';
+import dayjs from '@/core/configs/dayjs.config';
 
 describe('CanRegisterVendorPolicy', () => {
   let repository: InMemoryVendorRepository;

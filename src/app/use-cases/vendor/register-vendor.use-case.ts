@@ -25,10 +25,7 @@ export class RegisterVendorUseCase {
     birth,
     email,
     phone,
-    companyName,
     document,
-    plan,
-    planExpiresAt,
   }: IRegisterVendorUseCaseRequest): Promise<IRegisterVendorUseCaseResponse> {
     const canRegister = await this.canRegisterPolicy.execute(email);
 
@@ -43,10 +40,7 @@ export class RegisterVendorUseCase {
         email,
         phone,
         birth,
-        companyName,
         document,
-        plan,
-        planExpiresAt,
         status: 'pending',
       });
 

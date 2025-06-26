@@ -8,17 +8,14 @@ datasource db {
 }
 
 model Vendor {
-  id            String       @id @default(uuid())
-  name          String
-  surname       String
-  birth         DateTime?
-  email         String       @unique
-  phone         String
-  companyName   String?
-  document      String?
-  status        VendorStatus @default(pending)
-  plan          VendorPlan   @default(free)
-  planExpiresAt DateTime?
+  id       String       @id @default(uuid())
+  name     String
+  surname  String
+  birth    DateTime?
+  email    String       @unique
+  phone    String
+  document String?
+  status   VendorStatus @default(pending)
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @map("updated_at")
@@ -31,10 +28,4 @@ enum VendorStatus {
   active
   suspended
   pending
-}
-
-enum VendorPlan {
-  free
-  pro
-  enterprise
 }
